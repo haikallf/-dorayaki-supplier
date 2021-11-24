@@ -1,13 +1,13 @@
-package main.service;
+package main.services;
 
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.sql.*;
 
 @WebService(endpointInterface = "main.services.DorayakiService")
-public class DorayakiServiceImpl {
+public class DorayakiServiceImpl implements DorayakiService {
 
-    public static String RequestLimiter(String ip, String end, Timestamp time){
+    @Override
+    public String RateLimiter(String ip, String end, Timestamp time){
 
         try {
             int count = -1;
@@ -43,7 +43,7 @@ public class DorayakiServiceImpl {
         }
     }
 
-    public static void main(String[] args) {
-        RequestLimiter("1111","john",new Timestamp(System.currentTimeMillis()));
-       }
+//    public static void main(String[] args) {
+//        RequestLimiter("1111","john",new Timestamp(System.currentTimeMillis()));
+//       }
 }

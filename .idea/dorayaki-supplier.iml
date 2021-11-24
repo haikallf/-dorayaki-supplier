@@ -24,5 +24,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="com.sun.xml.ws:jaxws-r" level="project" />
   </component>
 </module>
