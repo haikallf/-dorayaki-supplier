@@ -11,5 +11,5 @@ import java.sql.Timestamp;
 public interface RequestDorayaki {
 
     @WebMethod
-    public String RequestStokPabrik(int id, int jumlah);
+    public String RequestDorayakiPabrik(int id, int jumlah);
 }

@@ -11,6 +11,6 @@ public class ListDorayakiImpl implements ListDorayaki {
 
         RateLimiter ratelimiter = new RateLimiter();
         ratelimiter.RateLimiter("ip","endpoint", new Timestamp(System.currentTimeMillis()));
-        return "belom";
+        return "belom list";
     }
 }
