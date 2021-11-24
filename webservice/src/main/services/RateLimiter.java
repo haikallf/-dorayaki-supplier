@@ -1,13 +1,13 @@
 package main.services;
 
-import javax.jws.WebService;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.Timestamp;
 
-@WebService(endpointInterface = "main.services.DorayakiService")
-public class DorayakiServiceImpl implements DorayakiService {
+public class RateLimiter {
 
-    @Override
-    public String RateLimiter(String ip, String end, Timestamp time){
+    public boolean RateLimiter(String ip, String end, Timestamp time){
 
         try {
             int count = -1;
@@ -30,20 +30,19 @@ public class DorayakiServiceImpl implements DorayakiService {
                 int update = statement.executeUpdate(query);
                 System.out.println("Berhasil masuk log, terusin ke backend");
                 conn.close();
+
+                return true;
             }
             else {
                 System.out.println("Lebih dari 10");
+                return false;
             }
 
-            return "Operasi Berhasil";
 
         } catch (Exception e) {
             e.printStackTrace();
-            return "Error";
+            System.out.println("Error");
+            return false;
         }
     }
-
-//    public static void main(String[] args) {
-//        RequestLimiter("1111","john",new Timestamp(System.currentTimeMillis()));
-//       }
 }

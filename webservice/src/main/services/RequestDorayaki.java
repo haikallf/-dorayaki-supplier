@@ -8,7 +8,8 @@ import java.sql.Timestamp;
 
 @WebService
 @SOAPBinding(style = Style.DOCUMENT)
-public interface DorayakiService {
+public interface RequestDorayaki {
+
     @WebMethod
-    public String RateLimiter(String ip, String end, Timestamp time);
+    public String RequestStokPabrik(int id, int jumlah);
 }
