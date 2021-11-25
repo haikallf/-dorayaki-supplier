@@ -7,5 +7,6 @@ public class DorayakiPublisher {
 
         Endpoint.publish("http://localhost:8081/ws/req", new RequestDorayakiImpl());
         Endpoint.publish("http://localhost:8081/ws/list", new ListDorayakiImpl());
+        Endpoint.publish("http://localhost:8081/ws/checkreq", new CheckRequestImpl());
     }
 }
