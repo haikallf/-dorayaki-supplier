@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 
 @WebService(endpointInterface = "main.services.RequestDorayaki")
@@ -38,35 +39,25 @@ public class RequestDorayakiImpl implements RequestDorayaki {
 
     }
 
-    public void sendReq(String input) {
+    public void sendReq(String data) {
 
         try {
 
-            URL url = new URL("http://localhost:3001/addRequest");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type", "application/json");
+            URL url = new URL("http://localhost:3001/tambahrequest");
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();
+            http.setRequestMethod("POST");
+            http.setDoOutput(true);
+            http.setRequestProperty("Accept", "application/json");
+            http.setRequestProperty("Content-Type", "application/json");
 
-            OutputStream os = conn.getOutputStream();
-            os.write(input.getBytes());
-            os.flush();
 
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + conn.getResponseCode());
-            }
+            byte[] out = data.getBytes(StandardCharsets.UTF_8);
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(
-                    (conn.getInputStream())));
+            OutputStream stream = http.getOutputStream();
+            stream.write(out);
 
-            String output;
-            System.out.println("Output from Server .... \n");
-            while ((output = br.readLine()) != null) {
-                System.out.println(output);
-            }
-
-            conn.disconnect();
+            System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
+            http.disconnect();
 
         } catch (MalformedURLException e) {
 
