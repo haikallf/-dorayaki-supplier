@@ -14,13 +14,19 @@ import java.sql.Timestamp;
 public class RequestDorayakiImpl implements RequestDorayaki {
 
     @Override
-    public String RequestDorayakiPabrik(String ip, int id, int jumlah) {
+    public String RequestDorayakiPabrik(String ip, String username, int idItem, int quantity) {
+        // parameter : idRequest, username, idItem, quantity, timestamp, status
+        // status otomatis pending (1 : accept, 0 : pending, -1 : decline)
 
         RateLimiter ratelimiter = new RateLimiter();
-        int status = ratelimiter.RateLimiter(ip,"list", new Timestamp(System.currentTimeMillis()));
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+
+        int status = ratelimiter.RateLimiter(ip,"req", time);
         if (status == 1) {
-            sendReq("disini string json");
-            return "Request Berhasil";
+            // bikin parameter jadi string json
+            String input = String.format("{\"\"username\":%s,\"idItem\":%d,\"quantity\":%d,\"timestamp\":%s}", username, idItem, quantity, time);
+            sendReq(input);
+            return "Request berhasil dikirim.";
 
         }
         else if (status == 0) {
@@ -36,7 +42,7 @@ public class RequestDorayakiImpl implements RequestDorayaki {
 
         try {
 
-            URL url = new URL("http://localhost:8080/RESTfulExample/json/product/post");
+            URL url = new URL("http://localhost:3001/addRequest");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
