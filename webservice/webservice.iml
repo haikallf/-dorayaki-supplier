@@ -48,5 +48,6 @@
     <orderEntry type="library" name="Maven: jakarta.xml.soap:jakarta.xml.soap-api:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: jakarta.jws:jakarta.jws-api:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: jakarta.annotation:jakarta.annotation-api:1.3.4" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
   </component>
 </module>
