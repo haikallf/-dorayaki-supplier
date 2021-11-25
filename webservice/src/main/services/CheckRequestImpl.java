@@ -35,7 +35,8 @@ public class CheckRequestImpl implements CheckRequest {
                 if (id == null || qty == null ) {return "{}";}
 
                 JSONObject jo = new JSONObject();
-                jo.put(id, qty);
+                jo.put("idItem", id);
+                jo.put("quantity", qty);
                 ja.add(jo);
             }
             String strja = ja.toString();
