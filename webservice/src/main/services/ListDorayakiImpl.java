@@ -49,7 +49,6 @@ public class ListDorayakiImpl implements ListDorayaki {
 
             String output;
             String output2 = "";
-            System.out.println("Output from Server .... \n");
             while ((output = br.readLine()) != null) {
                 output2 += output;
             }

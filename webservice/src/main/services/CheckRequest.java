@@ -9,5 +9,5 @@ import javax.jws.soap.SOAPBinding.Style;
 @SOAPBinding(style = Style.DOCUMENT)
 public interface CheckRequest {
     @WebMethod
-    public String CheckRequest (String ip);
+    public String CheckRequest (String username);
 }

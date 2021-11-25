@@ -71,7 +71,7 @@ public class RequestDorayakiImpl implements RequestDorayaki {
 
                 // print result
                 System.out.println(response.toString());
-            } 
+            }
 
         } catch (MalformedURLException e) {
 

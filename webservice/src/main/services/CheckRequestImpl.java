@@ -1,5 +1,8 @@
 package main.services;
 
+import org.json.JSONObject;
+import org.json.simple.JSONArray;
+
 import javax.jws.WebService;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,39 +13,41 @@ import java.sql.Timestamp;
 public class CheckRequestImpl implements CheckRequest {
 
     @Override
-    public String CheckRequest(String ip) {
+    public String CheckRequest(String username) {
 
         try {
             int count = -1;
             DBHandler handler = new DBHandler();
             Connection conn = handler.getConnection();
-            Statement statement = conn.createStatement();
-            String query = String.format("");
-            ResultSet result = statement.executeQuery(query);
+            Statement statement1 = conn.createStatement();
+            Statement statement2 = conn.createStatement();
+            String query = String.format("select idItem, sum(quantity) from request where username = '%s' and status = 1 and added = 0", username);
+            ResultSet result = statement1.executeQuery(query);
 
-            while(result.next()) {
-                String s = result.getString("count(*)");
-                count = Integer.parseInt(s);
+            String query2 = String.format("update request set added = 1 where username = '%s' and status = 1 and added = 0", username);
+            int result2 = statement2.executeUpdate(query2);
+
+            JSONArray ja = new JSONArray();
+            while (result.next()) {
+                String id = result.getString("IdItem");
+                String qty = result.getString("sum(quantity)");
+
+                if (id == null || qty == null ) {return "{}";}
+
+                JSONObject jo = new JSONObject();
+                jo.put(id, qty);
+                ja.add(jo);
             }
+            String strja = ja.toString();
+            System.out.println(strja);
+            return strja;
 
 
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error");
+            return "{Error}";
         }
-    return "belom";
-//        RateLimiter ratelimiter = new RateLimiter();
-//        int status = ratelimiter.RateLimiter(ip,"checkreq", new Timestamp(System.currentTimeMillis()));
-//        if (status == 1) {
-//            return "Array List Dorayaki";
-//
-//        }
-//        else if (status == 0) {
-//            return "Anda melakukan terlalu banyak request, harap tunggu...";
-//        }
-//        else {
-//            return "Terjadi kesalahan, silahkan coba lain kali.";
-//        }
 
     }
 }
