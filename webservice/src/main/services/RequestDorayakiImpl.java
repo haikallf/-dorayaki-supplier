@@ -25,7 +25,7 @@ public class RequestDorayakiImpl implements RequestDorayaki {
         int status = ratelimiter.RateLimiter(ip,"req", time);
         if (status == 1) {
             // bikin parameter jadi string json
-            String input = String.format("{\"\"username\":%s,\"idItem\":%d,\"quantity\":%d,\"timestamp\":%s}", username, idItem, quantity, time);
+            String input = String.format("{\"username\":\"%s\",\"idItem\":%d,\"quantity\":%d,\"timestamp\":\"%s\"}", username, idItem, quantity, time);
             sendReq(input);
             return "Request berhasil dikirim.";
 
@@ -40,24 +40,38 @@ public class RequestDorayakiImpl implements RequestDorayaki {
     }
 
     public void sendReq(String data) {
-
+        System.out.println(data);
         try {
 
-            URL url = new URL("http://localhost:3001/tambahrequest");
-            HttpURLConnection http = (HttpURLConnection)url.openConnection();
-            http.setRequestMethod("POST");
-            http.setDoOutput(true);
-            http.setRequestProperty("Accept", "application/json");
-            http.setRequestProperty("Content-Type", "application/json");
+            URL obj = new URL("http://localhost:3001/tambahrequest");
+            HttpURLConnection postConnection = (HttpURLConnection) obj.openConnection();
+            postConnection.setRequestMethod("POST");
+            postConnection.setRequestProperty("ufkyenpyzvbthpgf", "5btw1OE7XAz1zbSEcQKe");
+            postConnection.setRequestProperty("Content-Type", "application/json");
+            postConnection.setRequestProperty("Accept", "application/json");
+
+            postConnection.setDoOutput(true);
+            OutputStream os = postConnection.getOutputStream();
+            os.write(data.getBytes());
+            os.flush();
+            os.close();
 
 
-            byte[] out = data.getBytes(StandardCharsets.UTF_8);
+            int responseCode = postConnection.getResponseCode();
 
-            OutputStream stream = http.getOutputStream();
-            stream.write(out);
+            if (responseCode == HttpURLConnection.HTTP_CREATED) { //success
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        postConnection.getInputStream()));
+                String inputLine;
+                StringBuffer response = new StringBuffer();
 
-            System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
-            http.disconnect();
+                while ((inputLine = in .readLine()) != null) {
+                    response.append(inputLine);
+                } in .close();
+
+                // print result
+                System.out.println(response.toString());
+            } 
 
         } catch (MalformedURLException e) {
 
