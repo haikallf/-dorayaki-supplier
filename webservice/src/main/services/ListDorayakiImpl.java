@@ -18,7 +18,7 @@ public class ListDorayakiImpl implements ListDorayaki {
         RateLimiter ratelimiter = new RateLimiter();
         int status = ratelimiter.RateLimiter(ip,"list", new Timestamp(System.currentTimeMillis()));
         if (status == 1) {
-            return "Array List Dorayaki";
+            return getList();
 
         }
         else if (status == 0) {
@@ -30,11 +30,11 @@ public class ListDorayakiImpl implements ListDorayaki {
 
     }
 
-    public static void getList() {
+    public String getList() {
 
         try {
 
-            URL url = new URL("url listdorayaki");
+            URL url = new URL("http://localhost:3001/dorayaki");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
@@ -48,22 +48,25 @@ public class ListDorayakiImpl implements ListDorayaki {
                     (conn.getInputStream())));
 
             String output;
+            String output2 = "";
             System.out.println("Output from Server .... \n");
             while ((output = br.readLine()) != null) {
-                System.out.println(output);
+                output2 += output;
             }
 
             conn.disconnect();
 
+            return output2;
+
         } catch (MalformedURLException e) {
 
             e.printStackTrace();
+            return "Error, terjadi kesalahan, silahkan coba lagi";
 
         } catch (IOException e) {
 
             e.printStackTrace();
-
+            return "Error, terjadi kesalahan, silahkan coba lagi";
         }
-
     }
 }
