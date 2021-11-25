@@ -10,5 +10,5 @@ import javax.jws.soap.SOAPBinding.Style;
 public interface ListDorayaki {
 
     @WebMethod
-    public String ListDorayakiPabrik();
+    public String ListDorayakiPabrik(String ip);
 }

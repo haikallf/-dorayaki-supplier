@@ -6,7 +6,7 @@ import javax.jws.WebService;
 public class RequestDorayakiImpl implements RequestDorayaki {
 
     @Override
-    public String RequestDorayakiPabrik(int id, int jumlah) {
+    public String RequestDorayakiPabrik(String ip, int id, int jumlah) {
         return "belom req";
     }
 }

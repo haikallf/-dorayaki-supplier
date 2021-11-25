@@ -5,13 +5,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Timestamp;
 
+
 public class RateLimiter {
 
-    public boolean RateLimiter(String ip, String end, Timestamp time){
+    // return 1 : berhasil lolos, masuk ke database, 0 : Lebih dari treshold, -1 : Database error
+    public int RateLimiter(String ip, String end, Timestamp time){
 
         try {
             int count = -1;
-
             DBHandler handler = new DBHandler();
             Connection conn = handler.getConnection();
             Statement statement = conn.createStatement();
@@ -31,18 +32,18 @@ public class RateLimiter {
                 System.out.println("Berhasil masuk log, terusin ke backend");
                 conn.close();
 
-                return true;
+                return 1;
             }
             else {
                 System.out.println("Lebih dari 10");
-                return false;
+                return 0;
             }
 
 
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error");
-            return false;
+            return -1;
         }
     }
 }

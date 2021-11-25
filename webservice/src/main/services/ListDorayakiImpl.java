@@ -7,10 +7,10 @@ import java.sql.Timestamp;
 public class ListDorayakiImpl implements ListDorayaki {
 
     @Override
-    public String ListDorayakiPabrik() {
-
+    public String ListDorayakiPabrik(String ip) {
+        System.out.println(ip);
         RateLimiter ratelimiter = new RateLimiter();
-        ratelimiter.RateLimiter("ip","endpoint", new Timestamp(System.currentTimeMillis()));
+        ratelimiter.RateLimiter(ip,"list", new Timestamp(System.currentTimeMillis()));
         return "belom list";
     }
 }
