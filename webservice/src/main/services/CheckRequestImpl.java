@@ -21,7 +21,7 @@ public class CheckRequestImpl implements CheckRequest {
             Connection conn = handler.getConnection();
             Statement statement1 = conn.createStatement();
             Statement statement2 = conn.createStatement();
-            String query = String.format("select idItem, sum(quantity) from request where username = '%s' and status = 1 and added = 0", username);
+            String query = String.format("select idItem, sum(quantity) from request where username = '%s' and status = 1 and added = 0 group by idItem", username);
             ResultSet result = statement1.executeQuery(query);
 
             String query2 = String.format("update request set added = 1 where username = '%s' and status = 1 and added = 0", username);
@@ -39,7 +39,6 @@ public class CheckRequestImpl implements CheckRequest {
                 ja.add(jo);
             }
             String strja = ja.toString();
-            System.out.println(strja);
             return strja;
 
 
