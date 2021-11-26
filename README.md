@@ -4,7 +4,7 @@
 Webservice yang digunakan pada sistem ini adalah jax-ws (Java API for XML Web Services), yang merupakan api standard untuk membuat dan menggunakan Web Services SOAP (Simple Object Access Protocol). Pada sistem yang dibuat, webservice secara umum digunakan untuk menghubungkan toko ke back end nodejs.
 
 ## Skema basis data
-![skema] (./skema/skema.jpg)
+![skema](./skema/skema.jpg)
 
 ## Pembagian tugas
 
