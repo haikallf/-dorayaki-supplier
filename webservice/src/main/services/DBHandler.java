@@ -11,7 +11,7 @@ public class DBHandler {
         try {
             System.out.println(accessing + " is connecting to the database.");
             conn = DriverManager.getConnection(url, user, pass);
-            System.out.println("Database connected.");
+            System.out.println("Database connected.\n");
         } catch (Exception e) {
             e.printStackTrace();
         }

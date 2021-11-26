@@ -29,8 +29,9 @@ public class RateLimiter {
                 query = String.format("insert into log_request(ip,endpoint,timestamp) values ('%s','%s','%s')",ip,end,time);
                 int update = statement.executeUpdate(query);
                 System.out.println("Endpoint "+end+" inserted to log_request.");
+                statement.close();
                 conn.close();
-
+                result.close();
                 return 1;
             }
             else {
