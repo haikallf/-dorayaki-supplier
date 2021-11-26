@@ -17,7 +17,7 @@ public class CheckRequestImpl implements CheckRequest {
 
         try {
             int count = -1;
-            DBHandler handler = new DBHandler();
+            DBHandler handler = new DBHandler("Check Request");
             Connection conn = handler.getConnection();
             Statement statement1 = conn.createStatement();
             Statement statement2 = conn.createStatement();
@@ -32,7 +32,7 @@ public class CheckRequestImpl implements CheckRequest {
                 String id = result.getString("IdItem");
                 String qty = result.getString("sum(quantity)");
 
-                if (id == null || qty == null ) {return "{}";}
+                if (id == null || qty == null ) {return null;}
 
                 JSONObject jo = new JSONObject();
                 jo.put("idItem", id);
@@ -46,7 +46,7 @@ public class CheckRequestImpl implements CheckRequest {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error");
-            return "{Error}";
+            return null;
         }
 
     }

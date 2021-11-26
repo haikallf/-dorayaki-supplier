@@ -13,7 +13,7 @@ public class RateLimiter {
 
         try {
             int count = -1;
-            DBHandler handler = new DBHandler();
+            DBHandler handler = new DBHandler("Rate Limiter ("+end+")");
             Connection conn = handler.getConnection();
             Statement statement = conn.createStatement();
             String query = String.format("select count(*) from log_request where ip = '%s' and endpoint = '%s' and timestamp > ('%s' - interval 1 minute)",ip,end,time);
@@ -25,17 +25,17 @@ public class RateLimiter {
             }
 
             if (count <= 10) {
-                System.out.println("count "+count);
                 // tulis ke log_request
                 query = String.format("insert into log_request(ip,endpoint,timestamp) values ('%s','%s','%s')",ip,end,time);
                 int update = statement.executeUpdate(query);
-                System.out.println("Berhasil masuk log, terusin ke backend");
+                System.out.println("Endpoint "+end+" inserted to log_request.");
                 conn.close();
 
                 return 1;
             }
             else {
-                System.out.println("Lebih dari 10");
+                System.out.println("Terlalu banyak request.");
+                conn.close();
                 return 0;
             }
 

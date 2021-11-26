@@ -40,7 +40,6 @@ public class RequestDorayakiImpl implements RequestDorayaki {
     }
 
     public void sendReq(String data) {
-        System.out.println(data);
         try {
 
             URL obj = new URL("http://localhost:3001/tambahrequest");
